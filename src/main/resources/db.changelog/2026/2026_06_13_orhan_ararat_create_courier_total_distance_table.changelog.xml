@@ -1,0 +1,62 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.15.xsd">
+
+
+    <changeSet id="2026-06-13 14:45" author="orhanararat">
+        <createTable tableName="courier">
+            <column name="id" autoIncrement="true" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_courier"/>
+            </column>
+            <column name="created_at" type="DATETIME"/>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="modified_at" type="DATETIME"/>
+            <column name="modified_by" type="VARCHAR(255)"/>
+            <column name="version" type="INT"/>
+            <column name="is_deleted" type="BOOLEAN"/>
+
+            <column name="first_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="plate_number" type="VARCHAR(255)"/>
+
+            <column name="phone_number" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint columnNames="phone_number" constraintName="ix_unique_couirer_phone_number"
+                             tableName="courier"/>
+    </changeSet>
+
+
+    <changeSet id="2026-06-13 15:04" author="orhanararat">
+        <createIndex tableName="courier"
+                     indexName="idx_courier_phone_number">
+            <column name="phone_number"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="2026-06-13 17:23" author="orhanararat">
+        <sql>
+            INSERT INTO courier (created_at, created_by, modified_at, modified_by, version, is_deleted, first_name,
+                                 last_name, phone_number, plate_number)
+            VALUES (now(), 'orhan.ararat', now(), 'orhan.ararat', 0, false,
+                    'Test1', 'Deneme1', '5554443311',
+                    '01AAA111');
+
+            INSERT INTO courier (created_at, created_by, modified_at, modified_by, version, is_deleted, first_name,
+                                 last_name, phone_number, plate_number)
+            VALUES (now(), 'orhan.ararat', now(), 'orhan.ararat', 0, false,
+                    'Test2', 'Deneme2', '5554443322',
+                    '01AAA222');
+
+        </sql>
+    </changeSet>
+
+
+</databaseChangeLog>
